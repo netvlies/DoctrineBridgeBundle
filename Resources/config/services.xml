@@ -1,0 +1,35 @@
+<?xml version="1.0" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+
+        <service id="netvliesDoctrineStorageBridge.annotation_driver" class="Netvlies\Bundle\DoctrineStorageBridgeBundle\Mapping\Driver\AnnotationDriver" public="false">
+            <argument type="service" id="annotation_reader" />
+        </service>
+
+        <service id="netvliesDoctrineStorageBridge.metadata_cache" class="Metadata\Cache\FileCache" public="false">
+            <argument /><!-- the cache directory (to be set later) -->
+        </service>
+
+        <service id="netvliesDoctrineStorageBridge.metadata_factory" class="Metadata\MetadataFactory" public="false">
+            <argument type="service" id="netvliesDoctrineStorageBridge.annotation_driver" />
+            <call method="setCache">
+                <argument type="service" id="netvliesDoctrineStorageBridge.metadata_cache" />
+            </call>
+        </service>
+
+        <service id="netvliesDoctrineStorageBridge.entitylistener" class="Netvlies\Bundle\DoctrineStorageBridgeBundle\Listener\EntityListener">
+            <argument type="service" id="netvliesDoctrineStorageBridge.metadata_factory" />
+            <tag name="doctrine.event_listener" event="postLoad" />
+        </service>
+
+        <service id="netvliesDoctrineStorageBridge.documentlistener" class="Netvlies\Bundle\DoctrineStorageBridgeBundle\Listener\PHPCRDocumentListener">
+            <argument type="service" id="netvliesDoctrineStorageBridge.metadata_factory" />
+            <tag name="doctrine_phpcr.event_listener" event="postLoad" />
+        </service>
+
+    </services>
+
+</container>
