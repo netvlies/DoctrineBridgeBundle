@@ -16,16 +16,7 @@ class EntityListener
 {
     public function postLoad(LifecycleEventArgs $args)
     {
-//        $entity = $args->getEntity();
-//        $entityManager = $args->getEntityManager();
-//
-//        // perhaps you only want to act on some "Product" entity
-//        if ($entity instanceof Product) {
-//            // do something with the Product
-//        }
-
-        echo 'entity loaded!';
-        exit;
+        //@todo
     }
 
 

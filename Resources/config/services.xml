@@ -10,7 +10,7 @@
         </service>
 
         <service id="netvliesDoctrineStorageBridge.metadata_cache" class="Metadata\Cache\FileCache" public="false">
-            <argument /><!-- the cache directory (to be set later) -->
+            <argument /><!-- the cache directory (to be set later in extension) -->
         </service>
 
         <service id="netvliesDoctrineStorageBridge.metadata_factory" class="Metadata\MetadataFactory" public="false">
@@ -22,13 +22,19 @@
 
         <service id="netvliesDoctrineStorageBridge.entitylistener" class="Netvlies\Bundle\DoctrineStorageBridgeBundle\Listener\EntityListener">
             <argument type="service" id="netvliesDoctrineStorageBridge.metadata_factory" />
+            <argument type="service" id="doctrine" />
             <tag name="doctrine.event_listener" event="postLoad" />
         </service>
 
+
         <service id="netvliesDoctrineStorageBridge.documentlistener" class="Netvlies\Bundle\DoctrineStorageBridgeBundle\Listener\PHPCRDocumentListener">
             <argument type="service" id="netvliesDoctrineStorageBridge.metadata_factory" />
+            <argument type="service" id="doctrine" />
             <tag name="doctrine_phpcr.event_listener" event="postLoad" />
+            <tag name="doctrine_phpcr.event_listener" event="prePersist" />
         </service>
+
+
 
     </services>
 
