@@ -28,7 +28,45 @@ class PHPCRDocumentListener
 
     public function prePersist(LifecycleEventArgs $args)
     {
+        $document = $args->getDocument();
 
+        $classHierarchyMetadata = $this->metadataFactory->getMetadataForClass(get_class($document));
+
+        $classMetadata = $classHierarchyMetadata->classMetadata[get_class($document)];
+
+        foreach ($classMetadata->propertyMetadata as $propertyMetadata) {
+
+            switch($propertyMetadata->type){
+                case 'dbal':
+
+                    //@todo use entity manager name
+
+                    $em = $this->doctrine->getManager();
+                    // Copied following two lines from Doctrine\ORM\Mapping\ClassMetadataFactory
+                    list($namespaceAlias, $simpleClassName) = explode(':', $propertyMetadata->targetObject);
+                    $realClassName = $em->getConfiguration()->getEntityNamespace($namespaceAlias) . '\\' . $simpleClassName;
+
+                    /**
+                     * @var \Doctrine\Common\Persistence\Mapping\ClassMetadata $entityMetaData
+                     */
+                    $entityMetaData = $em->getClassMetadata($realClassName);
+                    $entity = $propertyMetadata->getValue($document);
+
+                    if(is_null($entity)){
+                        continue;
+                    }
+
+                    $idValues = $entityMetaData->getIdentifierValues($entity);
+                    $propertyMetadata->setValue($document, serialize($idValues));
+
+                    break;
+                case 'mongodb':
+
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
 
@@ -43,10 +81,11 @@ class PHPCRDocumentListener
         foreach ($classMetadata->propertyMetadata as $propertyMetadata) {
 
             /* @var $propertyMetadata \Netvlies\Bundle\DoctrineStorageBridgeBundle\Mapping\PropertyMetadata */
-            $proxy = null;
+            $reference = null;
 
             switch($propertyMetadata->type){
-                case 'dbaal':
+                case 'dbal':
+
                     //@todo use entity manager name
 
                     $em = $this->doctrine->getManager();
@@ -60,11 +99,16 @@ class PHPCRDocumentListener
                     $entityMetaData = $em->getClassMetadata($realClassName);
                     $value = $propertyMetadata->getValue($document);
 
-                    $entityMetaData->getIdentifierFieldNames();
-                    exit;
+                    if(empty($value)){
+                        continue;
+                    }
 
+                    // This means we only have support for simple relations pointing to one id. Combined keys are rare indeed
+                    // but impossible for now
+                    $ids = unserialize($value);
+                    $id = array_shift($ids);
 
-                    $proxy = $em->getProxyFactory()->getProxy($realClassName, array('id' => 1));
+                    $reference = $em->getReference($realClassName, $id);
 
                     break;
                 case 'mongodb':
@@ -73,8 +117,8 @@ class PHPCRDocumentListener
                 default:
                     break;
             }
-            if(!is_null($proxy)){
-                $propertyMetadata->setValue($document, $proxy);
+            if(!is_null($reference)){
+                $propertyMetadata->setValue($document, $reference);
 
             }
         }
