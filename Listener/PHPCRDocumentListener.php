@@ -72,9 +72,7 @@ class PHPCRDocumentListener
 
     public function preUpdate(LifecycleEventArgs $args)
     {
-       // exit;
         $this->prePersist($args);
-        echo 'updated';
     }
 
 
