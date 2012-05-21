@@ -1,12 +1,21 @@
 <?php
+/*
+ * This file is part of the Netvlies DoctrineBridgeBundle
+ *
+ * (c) Netvlies Internetdiensten
+ * author: M. de Krijger <mdekrijger@netvlies.net>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
-namespace Netvlies\Bundle\DoctrineStorageBridgeBundle\Mapping\Driver;
+namespace Netvlies\Bundle\DoctrineBridgeBundle\Mapping\Driver;
 
 use Metadata\Driver\DriverInterface;
 use Metadata\ClassMetadata;
 use Doctrine\Common\Annotations\Reader;
-use Netvlies\Bundle\DoctrineStorageBridgeBundle\Mapping\PropertyMetadata;
-use Netvlies\Bundle\DoctrineStorageBridgeBundle\Mapping\Annotations as BRIDGE;
+use Netvlies\Bundle\DoctrineBridgeBundle\Mapping\PropertyMetadata;
+use Netvlies\Bundle\DoctrineBridgeBundle\Mapping\Annotations as BRIDGE;
 
 
 class AnnotationDriver implements DriverInterface
@@ -36,7 +45,6 @@ class AnnotationDriver implements DriverInterface
                     $propertyMetadata->targetObject = $fieldAnnot->targetEntity;
                     $propertyMetadata->targetManager = $fieldAnnot->entityManager;
                     $propertyMetadata->type = 'dbal';
-                    var_dump($propertyMetadata);
                     $classMetadata->addPropertyMetadata($propertyMetadata);
                 }
             }

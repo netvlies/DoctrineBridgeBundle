@@ -1,18 +1,21 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: mdekrijger
- * Date: 5/13/12
- * Time: 9:48 AM
- * To change this template use File | Settings | File Templates.
+/*
+ * This file is part of the Netvlies DoctrineBridgeBundle
+ *
+ * (c) Netvlies Internetdiensten
+ * author: M. de Krijger <mdekrijger@netvlies.net>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
-namespace Netvlies\Bundle\DoctrineStorageBridgeBundle\Listener;
+namespace Netvlies\Bundle\DoctrineBridgeBundle\Listener;
 
 use Doctrine\ODM\PHPCR\Event\LifecycleEventArgs;
 use Doctrine\Common\Annotations\Reader;
 use Metadata\MetadataFactoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Registry;
+
 
 class PHPCRDocumentListener
 {
@@ -26,12 +29,11 @@ class PHPCRDocumentListener
         $this->metadataFactory = $metadataFactory;
     }
 
+
     public function prePersist(LifecycleEventArgs $args)
     {
         $document = $args->getDocument();
-
         $classHierarchyMetadata = $this->metadataFactory->getMetadataForClass(get_class($document));
-
         $classMetadata = $classHierarchyMetadata->classMetadata[get_class($document)];
 
         foreach ($classMetadata->propertyMetadata as $propertyMetadata) {
@@ -39,8 +41,7 @@ class PHPCRDocumentListener
             switch($propertyMetadata->type){
                 case 'dbal':
 
-                    //@todo use entity manager name
-
+                    //@todo use entity manager name;
                     $em = $this->doctrine->getManager();
                     // Copied following two lines from Doctrine\ORM\Mapping\ClassMetadataFactory
                     list($namespaceAlias, $simpleClassName) = explode(':', $propertyMetadata->targetObject);
@@ -69,6 +70,13 @@ class PHPCRDocumentListener
         }
     }
 
+    public function preUpdate(LifecycleEventArgs $args)
+    {
+       // exit;
+        $this->prePersist($args);
+        echo 'updated';
+    }
+
 
     public function postLoad(LifecycleEventArgs $args)
     {
@@ -80,7 +88,7 @@ class PHPCRDocumentListener
 
         foreach ($classMetadata->propertyMetadata as $propertyMetadata) {
 
-            /* @var $propertyMetadata \Netvlies\Bundle\DoctrineStorageBridgeBundle\Mapping\PropertyMetadata */
+            /* @var $propertyMetadata \Netvlies\Bundle\DoctrineBridgeBundle\Mapping\PropertyMetadata */
             $reference = null;
 
             switch($propertyMetadata->type){
@@ -103,8 +111,7 @@ class PHPCRDocumentListener
                         continue;
                     }
 
-                    // This means we only have support for simple relations pointing to one id. Combined keys are rare indeed
-                    // but impossible for now
+                    // This means we only have support for simple relations pointing to one id.
                     $ids = unserialize($value);
                     $id = array_shift($ids);
 

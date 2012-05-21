@@ -9,17 +9,18 @@
  * file that was distributed with this source code.
  */
 
-namespace Netvlies\Bundle\DoctrineBridgeBundle\Listener;
+namespace Netvlies\Bundle\DoctrineBridgeBundle;
 
-use Doctrine\ORM\Event\LifecycleEventArgs;
+use Symfony\Component\HttpKernel\Bundle\Bundle;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 
-class EntityListener
+
+class NetvliesDoctrineBridgeBundle extends Bundle
 {
-    public function postLoad(LifecycleEventArgs $args)
+    public function build(ContainerBuilder $container)
     {
-        //@todo
+        parent::build($container);
+
     }
-
-
 }

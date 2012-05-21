@@ -5,33 +5,34 @@
 
     <services>
 
-        <service id="netvliesDoctrineStorageBridge.annotation_driver" class="Netvlies\Bundle\DoctrineStorageBridgeBundle\Mapping\Driver\AnnotationDriver" public="false">
+        <service id="netvliesDoctrineBridge.annotation_driver" class="Netvlies\Bundle\DoctrineBridgeBundle\Mapping\Driver\AnnotationDriver" public="false">
             <argument type="service" id="annotation_reader" />
         </service>
 
-        <service id="netvliesDoctrineStorageBridge.metadata_cache" class="Metadata\Cache\FileCache" public="false">
+        <service id="netvliesDoctrineBridge.metadata_cache" class="Metadata\Cache\FileCache" public="false">
             <argument /><!-- the cache directory (to be set later in extension) -->
         </service>
 
-        <service id="netvliesDoctrineStorageBridge.metadata_factory" class="Metadata\MetadataFactory" public="false">
-            <argument type="service" id="netvliesDoctrineStorageBridge.annotation_driver" />
+        <service id="netvliesDoctrineBridge.metadata_factory" class="Metadata\MetadataFactory" public="false">
+            <argument type="service" id="netvliesDoctrineBridge.annotation_driver" />
             <call method="setCache">
-                <argument type="service" id="netvliesDoctrineStorageBridge.metadata_cache" />
+                <argument type="service" id="netvliesDoctrineBridge.metadata_cache" />
             </call>
         </service>
 
-        <service id="netvliesDoctrineStorageBridge.entitylistener" class="Netvlies\Bundle\DoctrineStorageBridgeBundle\Listener\EntityListener">
-            <argument type="service" id="netvliesDoctrineStorageBridge.metadata_factory" />
+        <service id="netvliesDoctrineBridge.entitylistener" class="Netvlies\Bundle\DoctrineBridgeBundle\Listener\EntityListener">
+            <argument type="service" id="netvliesDoctrineBridge.metadata_factory" />
             <argument type="service" id="doctrine" />
             <tag name="doctrine.event_listener" event="postLoad" />
         </service>
 
 
-        <service id="netvliesDoctrineStorageBridge.documentlistener" class="Netvlies\Bundle\DoctrineStorageBridgeBundle\Listener\PHPCRDocumentListener">
-            <argument type="service" id="netvliesDoctrineStorageBridge.metadata_factory" />
+        <service id="netvliesDoctrineBridge.documentlistener" class="Netvlies\Bundle\DoctrineBridgeBundle\Listener\PHPCRDocumentListener">
+            <argument type="service" id="netvliesDoctrineBridge.metadata_factory" />
             <argument type="service" id="doctrine" />
             <tag name="doctrine_phpcr.event_listener" event="postLoad" />
             <tag name="doctrine_phpcr.event_listener" event="prePersist" />
+            <tag name="doctrine_phpcr.event_listener" event="preUpdate" />
         </service>
 
 
