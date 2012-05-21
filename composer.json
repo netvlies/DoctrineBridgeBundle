@@ -1,0 +1,7 @@
+{
+    "name": "netvlies/sf2bundle-doctrinebridge",
+    "autoload":     {
+        "psr-0": { "Netvlies\\Bundle\\DoctrineBridgeBundle": "" }
+    },
+    "target-dir": "Netvlies/Bundle/DoctrineBridgeBundle"
+}
