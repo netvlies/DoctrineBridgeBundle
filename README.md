@@ -3,7 +3,8 @@ Netvlies DoctrineBridge
 
 This bundle provides a bridge functionality between different doctrine managers. The bridge functionality makes it possible to make interlinked relations between an entity and a document (and vice versa) using annotations. An example for a document:
 
-
+    use Netvlies\Bundle\DoctrineBridgeBundle\Mapping\Annotations as BRIDGE;
+    
     /**
      *
      * @PHPCRODM\Document(referenceable=true)
@@ -18,6 +19,8 @@ This bundle provides a bridge functionality between different doctrine managers.
 
 And vice versa
 
+    use Netvlies\Bundle\DoctrineBridgeBundle\Mapping\Annotations as BRIDGE;
+    
     /**
      * @ORM\Table()
      * @ORM\Entity
