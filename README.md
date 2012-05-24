@@ -34,20 +34,28 @@ Using this annotation, it will load a reference object when retrieved, and will 
 
 # TODO
 
+* There are no tests yet. The bundle is quite simple now, but with further development tests should be added and checked in Travis
 * Currently it only supports x-to-one relations. So this is must be added later on to have at least support for one-to-many relations.
 * Currently it has only support ORM and PHPCR. So support for mongoDB and/or other storage engines might be added in the future.
 
 
 # Installation
 
-You can either use composer or include it into your deps file.
+You can either use composer or include it into your deps file. For composer:
 
-Either way you need to add following line to your autoload.php and change the path accordingly (if needed)
+    "netvlies/doctrinebridgebundle": "dev-master",
+
+Deps file
+
+    [doctrineBridgeBundle]
+    git=http://github.com/netvlies/DoctrineBridgeBundle.git
+
+After that you need to add following line to your autoload.php and change the path accordingly (if needed)
 
     AnnotationRegistry::registerFile(__DIR__.'/../vendor/netvlies/doctrinebridge/Netvlies/Bundle/DoctrineBridgeBundle/Mapping/Annotations/DoctrineAnnotations.php');
 
 And dont't forget it to include into your AppKernel.php
 
-    new Netvlies\Bundle\DoctrineBridgeBundle\NetvliesDoctrineBridgeBundle(),
+    new Netvlies\Bundle\DoctrineBridgeBundle\DoctrineBridgeBundle(),
 
 

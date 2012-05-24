@@ -1,5 +1,5 @@
 {
-    "name": "netvlies/sf2bundle-doctrinebridge",
+    "name": "netvlies/doctrinebridgebundle",
     "autoload":     {
         "psr-0": { "Netvlies\\Bundle\\DoctrineBridgeBundle": "" }
     },
