@@ -59,3 +59,7 @@ And dont't forget it to include into your AppKernel.php
     new Netvlies\Bundle\DoctrineBridgeBundle\DoctrineBridgeBundle(),
 
 
+
+
+
+
