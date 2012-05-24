@@ -41,8 +41,7 @@ class PHPCRDocumentListener
             switch($propertyMetadata->type){
                 case 'dbal':
 
-                    //@todo use entity manager name;
-                    $em = $this->doctrine->getManager();
+                    $em = $this->doctrine->getManager($propertyMetadata->targetManager);
                     // Copied following two lines from Doctrine\ORM\Mapping\ClassMetadataFactory
                     list($namespaceAlias, $simpleClassName) = explode(':', $propertyMetadata->targetObject);
                     $realClassName = $em->getConfiguration()->getEntityNamespace($namespaceAlias) . '\\' . $simpleClassName;
@@ -58,11 +57,12 @@ class PHPCRDocumentListener
                     }
 
                     $idValues = $entityMetaData->getIdentifierValues($entity);
+                    //$idValues['uid'] = microtime().rand(0, 1000);
                     $propertyMetadata->setValue($document, serialize($idValues));
 
                     break;
                 case 'mongodb':
-
+                    throw new \Exception('MongoDB is not yet implemented');
                     break;
                 default:
                     break;
@@ -92,9 +92,7 @@ class PHPCRDocumentListener
             switch($propertyMetadata->type){
                 case 'dbal':
 
-                    //@todo use entity manager name
-
-                    $em = $this->doctrine->getManager();
+                    $em = $this->doctrine->getManager($propertyMetadata->targetManager);
                     // Copied following two lines from Doctrine\ORM\Mapping\ClassMetadataFactory
                     list($namespaceAlias, $simpleClassName) = explode(':', $propertyMetadata->targetObject);
                     $realClassName = $em->getConfiguration()->getEntityNamespace($namespaceAlias) . '\\' . $simpleClassName;
@@ -117,7 +115,7 @@ class PHPCRDocumentListener
 
                     break;
                 case 'mongodb':
-
+                    throw new \Exception('MongoDB is not yet implemented');
                     break;
                 default:
                     break;
@@ -127,7 +125,5 @@ class PHPCRDocumentListener
 
             }
         }
-
     }
-
 }

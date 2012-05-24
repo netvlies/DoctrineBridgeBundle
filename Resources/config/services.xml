@@ -22,8 +22,10 @@
 
         <service id="netvliesDoctrineBridge.entitylistener" class="Netvlies\Bundle\DoctrineBridgeBundle\Listener\EntityListener">
             <argument type="service" id="netvliesDoctrineBridge.metadata_factory" />
-            <argument type="service" id="doctrine" />
+            <argument type="service" id="doctrine_phpcr" />
             <tag name="doctrine.event_listener" event="postLoad" />
+            <tag name="doctrine.event_listener" event="prePersist" />
+            <tag name="doctrine.event_listener" event="preUpdate" />
         </service>
 
 

@@ -22,5 +22,17 @@ final class Entity
     /** @var string */
     public $targetEntity;
     /** @var string */
-    public $entityManager;
+    public $entityManager='default';
+}
+
+/**
+ * @Annotation
+ * @Target("PROPERTY")
+ */
+final class Document
+{
+    /** @var string */
+    public $targetDocument;
+    /** @var string */
+    public $documentManager='default';
 }

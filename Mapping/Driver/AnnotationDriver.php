@@ -47,6 +47,16 @@ class AnnotationDriver implements DriverInterface
                     $propertyMetadata->type = 'dbal';
                     $classMetadata->addPropertyMetadata($propertyMetadata);
                 }
+
+                if ($fieldAnnot instanceof BRIDGE\Document) {
+                    /**
+                     * @var BRIDGE\Document $fieldAnnot
+                     */
+                    $propertyMetadata->targetObject = $fieldAnnot->targetDocument;
+                    $propertyMetadata->targetManager = $fieldAnnot->documentManager;
+                    $propertyMetadata->type = 'odm';
+                    $classMetadata->addPropertyMetadata($propertyMetadata);
+                }
             }
         }
         return $classMetadata;
