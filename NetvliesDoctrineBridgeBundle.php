@@ -16,7 +16,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 
 
-class DoctrineBridgeBundle extends Bundle
+class NetvliesDoctrineBridgeBundle extends Bundle
 {
     public function build(ContainerBuilder $container)
     {

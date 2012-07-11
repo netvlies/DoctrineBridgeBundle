@@ -59,7 +59,7 @@ After that you need to add following line to your autoload.php and change the pa
 
 And dont't forget it to include into your AppKernel.php
 
-    new Netvlies\Bundle\DoctrineBridgeBundle\DoctrineBridgeBundle(),
+    new Netvlies\Bundle\DoctrineBridgeBundle\NetvliesDoctrineBridgeBundle(),
 
 
 
