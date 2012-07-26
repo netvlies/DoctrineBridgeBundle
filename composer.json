@@ -1,7 +1,21 @@
 {
     "name": "netvlies/doctrinebridgebundle",
+    "type": "library",
+    "description": "This bundle provides a bridge functionality between different doctrine managers. The bridge functionality makes it possible to make interlinked relations between an entity and a document (and vice versa) using annotations.",
+    "license": "MIT",
+    "authors": [
+        {"name":"Marco de Krijger", "email": "mdekrijger@netvlies.nl"}
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.3.2"
+    },
+    "require-dev": {
+        "doctrine/common": ">=2.3.x-dev",
+        "doctrine/phpcr-odm": "dev-master",
+        "jackalope/jackalope-jackrabbit": "1.*"
+    },
     "autoload":     {
         "psr-0": { "Netvlies\\Bundle\\DoctrineBridgeBundle": "" }
-    },
-    "target-dir": "Netvlies/Bundle/DoctrineBridgeBundle"
+    }
 }

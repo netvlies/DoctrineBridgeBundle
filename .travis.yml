@@ -1,0 +1,18 @@
+language: php
+
+php:
+  - 5.3
+  - 5.4
+
+env:
+
+
+before_script:
+  - wget -nc http://getcomposer.org/composer.phar
+  - ./Tests/setup.sh
+  - php composer.phar install --dev
+
+script: phpunit -c tests/phpunit.xml.dist.dist
+
+notifications:
+  email: "mdekrijger@netvlies.nl"
