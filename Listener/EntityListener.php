@@ -47,7 +47,7 @@ class EntityListener
                     $realClassName = $dm->getConfiguration()->getDocumentNamespace($namespaceAlias) . '\\' . $simpleClassName;
 
                     /**
-                     * @var \Doctrine\Common\Persistence\Mapping\ClassMetadata $entityMetaData
+                     * @var \Doctrine\Common\Persistence\Mapping\ClassMetadata $documentMetaData
                      */
                     $documentMetaData = $dm->getClassMetadata($realClassName);
                     $document = $propertyMetadata->getValue($entity);
@@ -58,6 +58,9 @@ class EntityListener
 
                     $idValues = $documentMetaData->getIdentifierValues($document);
                     $propertyMetadata->setValue($entity, serialize($idValues));
+
+                    $class = $args->getEntityManager()->getClassMetadata(get_class($entity));
+                    $args->getEntityManager()->getUnitOfWork()->recomputeSingleEntityChangeSet($class, $entity);
 
                     break;
                 case 'mongodb':
